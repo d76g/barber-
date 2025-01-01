@@ -1,0 +1,1236 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxe Style Barber</title>
+    <meta name="title" content="Barber - Barbers & Hair Cutting" />
+    <meta
+      name="description"
+      content="This is a barber html template made by codewithsadee"
+    />
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik:wght@300,400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/flaticon.min.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="./assets/images/shop_1.jpeg" />
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+  </head>
+
+  <body id="top">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="container">
+          <ul class="header-top-list">
+            <li class="header-top-item">
+              <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+              <p class="item-title">Bel ons :</p>
+              <a href="tel:01234567895" class="item-link">+31 6282 867 92</a>
+            </li>
+            <li class="header-top-item">
+              <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+              <p class="item-title">Openingstijden :</p>
+              <p class="item-text">Maandag - zondag, 10:00 - 20:00 uur</p>
+            </li>
+            <li>
+              <ul class="social-list">
+                <li>
+                  <a
+                    href="https://www.instagram.com/luxe_style_barber"
+                    class="social-link"
+                    target="_blank"
+                  >
+                    <ion-icon name="logo-instagram"></ion-icon>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.tiktok.com/@luxeszqf1ky2"
+                    class="social-link"
+                    target="_blank"
+                  >
+                    <ion-icon name="logo-tiktok"></ion-icon>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-bottom" data-header>
+        <div class="container">
+          <a href="#" class="logo">
+            Luxe Style
+            <span class="span">Barber Shop</span>
+          </a>
+
+          <nav class="navbar container" data-navbar>
+            <ul class="navbar-list">
+              <li class="navbar-item">
+                <a href="#home" class="navbar-link" data-nav-link>Home</a>
+              </li>
+              <li class="navbar-item">
+                <a href="#services" class="navbar-link" data-nav-link
+                  >Services</a
+                >
+              </li>
+              <li class="navbar-item">
+                <a href="#pricing" class="navbar-link" data-nav-link>
+                  Prijzen</a
+                >
+              </li>
+              <li class="navbar-item">
+                <a href="#gallery" class="navbar-link" data-nav-link>Galerij</a>
+              </li>
+              <li class="navbar-item">
+                <a href="#appointment" class="navbar-link" data-nav-link
+                  >Afspraak maken</a
+                >
+              </li>
+              <li class="navbar-item">
+                <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
+              </li>
+            </ul>
+          </nav>
+
+          <button
+            class="nav-toggle-btn"
+            aria-label="toggle menu"
+            data-nav-toggler
+          >
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+          <a href="#appointment" class="btn has-before">
+            <span class="span"> Afspraak maken</span>
+            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <!-- 
+        - #HERO
+      -->
+
+        <section
+          class="section hero has-before has-bg-image"
+          id="home"
+          aria-label="home"
+          style="background-image: url('./assets/images/home_bg.png')"
+        >
+          <div class="container">
+            <h1 class="h1 hero-title">Luxe Style Barber shop</h1>
+
+            <p class="hero-text">
+              Luxe Style Barber in Delft combineert traditioneel vakmanschap met
+              een moderne stijl. We bieden zowel klassieke als moderne kapsels
+              aan, met uitstekende service en een gezellige sfeer. We geven ook
+              gratis massages bij kapsels. Kom langs en geniet van de topservice
+              die wij bieden! Je mist ons niet in het hart van het centrum van
+              Delft!
+            </p>
+
+            <a href="#services" class="btn has-before">
+              <span class="span">Ontdek onze diensten</span>
+
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+        </section>
+
+        <!-- 
+        - #SERVICE
+      -->
+
+        <section class="section service" id="services" aria-label="services">
+          <div class="container">
+            <h2 class="h2 section-title text-center">Onze diensten</h2>
+
+            <p class="section-text text-center">
+              Wij bieden veel verzorgingsdiensten aan om u er op uw best uit te
+              laten zien. Van klassieke kapsels en fades tot baardtrimmen en
+              styling, onze ervaren kappers zorgen ervoor dat u verfrist en vol
+              zelfvertrouwen de deur uitgaat. Of u nu op zoek bent naar een
+              tijdloze look of een moderne stijl, wij staan voor u klaar met
+              precisie en zorg.
+            </p>
+
+            <ul class="grid-list">
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <i class="flaticon-salon"></i>
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Knippen</a>
+                  </h3>
+
+                  <p class="card-text">
+                    we offer beard cutting styles to match your look. Whether
+                    you want a clean, sharp shape or a more natural style, our
+                    barbers make sure your beard looks its best.
+                  </p>
+
+                  <a href="#" class="card-btn" aria-label="more">
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </a>
+                </div>
+              </li>
+
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <i class="flaticon-shampoo"></i>
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Haar Wassen en Stylen</a>
+                  </h3>
+
+                  <p class="card-text">
+                    we offer beard cutting styles to match your look. Whether
+                    you want a clean, sharp shape or a more natural style, our
+                    barbers make sure your beard looks its best.
+                  </p>
+
+                  <a href="#" class="card-btn" aria-label="more">
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </a>
+                </div>
+              </li>
+
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <i class="flaticon-spa" aria-hidden="true"></i>
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Oren en Neus Waxen</a>
+                  </h3>
+
+                  <p class="card-text">
+                    we offer beard cutting styles to match your look. Whether
+                    you want a clean, sharp shape or a more natural style, our
+                    barbers make sure your beard looks its best.
+                  </p>
+
+                  <a href="#" class="card-btn" aria-label="more">
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </a>
+                </div>
+              </li>
+
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <i class="flaticon-shaving-razor"></i>
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Volledige Service</a>
+                  </h3>
+
+                  <p class="card-text">
+                    we offer beard cutting styles to match your look. Whether
+                    you want a clean, sharp shape or a more natural style, our
+                    barbers make sure your beard looks its best.
+                  </p>
+
+                  <a href="#" class="card-btn" aria-label="more">
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </a>
+                </div>
+              </li>
+
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <i class="flaticon-hair-dye"></i>
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Haar Verven</a>
+                  </h3>
+
+                  <p class="card-text">
+                    we offer beard cutting styles to match your look. Whether
+                    you want a clean, sharp shape or a more natural style, our
+                    barbers make sure your beard looks its best.
+                  </p>
+
+                  <a href="#" class="card-btn" aria-label="more">
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 
+        - #PRICING
+      -->
+
+        <section
+          class="section pricing has-bg-image has-before"
+          id="pricing"
+          aria-label="pricing"
+          style="background-image: url('./assets/images/pricing-bg.jpg')"
+        >
+          <div class="container">
+            <h2 class="h2 section-title text-center">Geweldige prijzen</h2>
+
+            <p class="section-text text-center">
+              Onze geweldige prijsopties bieden flexibiliteit om aan uw
+              behoeften te voldoen. Geniet van topkwaliteit tegen een betaalbare
+              prijs met een plan dat bij u past.
+            </p>
+
+            <div class="pricing-tab-container">
+              <ul class="tab-filter">
+                <li>
+                  <button class="filter-btn active" data-filter-btn="all">
+                    <div class="btn-icon">
+                      <i class="flaticon-beauty-salon" aria-hidden="true"></i>
+                    </div>
+
+                    <p class="btn-text">Alle prijzen</p>
+                  </button>
+                </li>
+
+                <li>
+                  <button class="filter-btn" data-filter-btn="kinppen">
+                    <div class="btn-icon">
+                      <i class="flaticon-shaving-razor"></i>
+                    </div>
+
+                    <p class="btn-text">Knippen</p>
+                  </button>
+                </li>
+
+                <li>
+                  <button class="filter-btn" data-filter-btn="verven">
+                    <div class="btn-icon">
+                      <i class="flaticon-hair-dye"></i>
+                    </div>
+
+                    <p class="btn-text">Verven</p>
+                  </button>
+                </li>
+
+                <li>
+                  <button class="filter-btn" data-filter-btn="andere_services">
+                    <div class="btn-icon">
+                      <i class="flaticon-shampoo"></i>
+                    </div>
+
+                    <p class="btn-text">Andere Services</p>
+                  </button>
+                </li>
+
+                <li>
+                  <button class="filter-btn" data-filter-btn="wax_producten">
+                    <div class="btn-icon">
+                      <i class="flaticon-shopping-cart" aria-hidden="true"></i>
+                    </div>
+
+                    <p class="btn-text">Wax Producten</p>
+                  </button>
+                </li>
+
+                <li>
+                  <button class="filter-btn" data-filter-btn="studenten">
+                    <div class="btn-icon">
+                      <i class="flaticon-medal" aria-hidden="true"></i>
+                    </div>
+                    <p class="btn-text">Studentenprijs</p>
+                  </button>
+                </li>
+              </ul>
+
+              <ul class="grid-list">
+                <li data-filter="kinppen">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/prijs_1a.png"
+                        width="90"
+                        height="90"
+                        alt="Hair Cutting & Fitting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Haar Knippen</h3>
+
+                      <p class="card-text">30-40 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="89">€19.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="kinppen">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/prijs_4.png"
+                        width="90"
+                        height="90"
+                        alt="Hair Cutting & Fitting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Haar en Scheren</h3>
+
+                      <p class="card-text">30-50 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="89">€29.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="kinppen">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/pricing-2.jpg"
+                        width="90"
+                        height="90"
+                        alt="Hair Cutting & Fitting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Baard Scheren</h3>
+
+                      <p class="card-text">20-30 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="89">€13.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="kinppen">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/prijs_3.png"
+                        width="90"
+                        height="90"
+                        alt="Hair Cutting & Fitting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Kinderen tot 10 jaar</h3>
+
+                      <p class="card-text">20-30 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="16.99">€16.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="kinppen">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/prijs_2.png"
+                        width="90"
+                        height="90"
+                        alt="Hair Cutting & Fitting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Senioren 60+</h3>
+
+                      <p class="card-text">30-50 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="89">€14.99</data>
+                  </div>
+                </li>
+
+                <!--andere services-->
+
+                <li data-filter="andere_services">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/volledige_service.png"
+                        width="90"
+                        height="90"
+                        alt="Shaving & Facial"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Volledige service</h3>
+
+                      <p class="card-text">60 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="39.99">€39.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="andere_services">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/haar_baard_1.png"
+                        width="90"
+                        height="90"
+                        alt="Shaving & Facial"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Haar wassen en stylen</h3>
+
+                      <p class="card-text">15 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="39.99">€5.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="andere_services">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/waxen.png"
+                        width="90"
+                        height="90"
+                        alt="Shaving & Facial"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Oren and Neus waxen</h3>
+
+                      <p class="card-text">15 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="2.99">€2.99</data>
+                  </div>
+                </li>
+
+                <!--verven-->
+                <li data-filter="verven">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/verven.png"
+                        width="90"
+                        height="90"
+                        alt="Body Massage"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Haar Verven</h3>
+
+                      <p class="card-text">30-40 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="13.99">€13.99</data>
+                  </div>
+                </li>
+
+                <li data-filter="verven">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/baard_verven.png"
+                        width="90"
+                        height="90"
+                        alt="Body Massage"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Baard Verven</h3>
+
+                      <p class="card-text">30-40 minuten</p>
+                    </div>
+
+                    <data class="card-price" value="11.99">€11.99</data>
+                  </div>
+                </li>
+
+                <!--wax producten-->
+
+                <li data-filter="wax_producten">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/wax_p.png"
+                        width="90"
+                        height="90"
+                        alt="Beauty & Spa"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Reusable Shopping Bags</h3>
+
+                      <p class="card-text">Wax voor styling</p>
+                    </div>
+
+                    <data class="card-price" value="10">€10</data>
+                  </div>
+                </li>
+
+                <li data-filter="wax_producten">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/wax_p.png"
+                        width="90"
+                        height="90"
+                        alt="Beauty & Spa"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Compostable Packagings</h3>
+
+                      <p class="card-text">Wax voor styling</p>
+                    </div>
+
+                    <data class="card-price" value="10">€10</data>
+                  </div>
+                </li>
+
+                <!--Studenten Korting-->
+
+                <li data-filter="studenten">
+                  <div class="pricing-card">
+                    <figure
+                      class="card-banner img-holder"
+                      style="--width: 90; --height: 90"
+                    >
+                      <img
+                        src="./assets/images/student_k.png"
+                        width="90"
+                        height="90"
+                        alt="Studenten Korting"
+                        class="img-cover"
+                      />
+                    </figure>
+
+                    <div class="wrapper">
+                      <h3 class="h3 card-title">Studenten Korting</h3>
+
+                      <p class="card-text">Speciale prijs voor studenten</p>
+                    </div>
+
+                    <data class="card-price" value="16.99">€16.99</data>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 
+        - #GALLERY
+      -->
+
+        <section
+          class="section gallery"
+          id="gallery"
+          aria-label="photo gallery"
+        >
+          <div class="container">
+            <div class="title-wrapper">
+              <div>
+                <h2 class="h2 section-title">Laatste fotogalerij</h2>
+
+                <p class="section-text">
+                  Bekijk onze nieuwste fotogalerij om een indruk te krijgen van
+                  de recente stijlen die we voor onze klanten hebben gecreëerd.
+                </p>
+              </div>
+
+              <a
+                href="https://www.tiktok.com/@luxeszqf1ky2?_t=8rncWZ2DR1K&_r=1"
+                class="btn has-before"
+                target="_blank"
+              >
+                <span class="span">Bekijk meer galerij</span>
+
+                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+              </a>
+            </div>
+
+            <ul class="grid-list">
+              <li>
+                <div class="gallery-card">
+                  <figure
+                    class="card-banner img-holder"
+                    style="--width: 422; --height: 550"
+                  >
+                    <img
+                      src="./assets/images/customer_1.jpeg"
+                      width="422"
+                      height="550"
+                      loading="lazy"
+                      alt="Hair Cutting"
+                      class="img-cover"
+                    />
+                  </figure>
+
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Onze Werk</h3>
+
+                    <p class="card-text">Luxe Style Barber Shop</p>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="gallery-card">
+                  <figure
+                    class="card-banner img-holder"
+                    style="--width: 422; --height: 550"
+                  >
+                    <img
+                      src="./assets/images/customer_2.jpeg"
+                      width="422"
+                      height="550"
+                      loading="lazy"
+                      alt="Hair Cutting"
+                      class="img-cover"
+                    />
+                  </figure>
+
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Onze Werk</h3>
+
+                    <p class="card-text">Luxe Style Barber Shop</p>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="gallery-card">
+                  <figure
+                    class="card-banner img-holder"
+                    style="--width: 422; --height: 550"
+                  >
+                    <img
+                      src="./assets/images/customer_9.jpeg"
+                      width="422"
+                      height="550"
+                      loading="lazy"
+                      alt="Hair Cutting"
+                      class="img-cover"
+                    />
+                  </figure>
+
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Onze Werk</h3>
+
+                    <p class="card-text">Luxe Style Barber Shop</p>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="gallery-card">
+                  <figure
+                    class="card-banner img-holder"
+                    style="--width: 422; --height: 550"
+                  >
+                    <img
+                      src="./assets/images/customer_7.jpeg"
+                      width="422"
+                      height="550"
+                      loading="lazy"
+                      alt="Hair Cutting"
+                      class="img-cover"
+                    />
+                  </figure>
+
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Onze Werk</h3>
+
+                    <p class="card-text">Luxe Style Barber Shop</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 
+        - #APPOINTMENT
+      -->
+
+        <section
+          class="section appoin"
+          id="appointment"
+          aria-label="appointment"
+        >
+          <div class="container">
+            <div class="appoin-card">
+              <figure
+                class="card-banner img-holder"
+                style="--width: 250; --height: 774"
+              >
+                <img
+                  src="./assets/images/appoin-banner-1.jpg"
+                  width="250"
+                  height="774"
+                  loading="lazy"
+                  alt=""
+                  class="img-cover"
+                />
+              </figure>
+
+              <div class="card-content">
+                <h2 class="h2 section-title">Maak een afspraak</h2>
+
+                <p class="section-text">
+                  Maak nu eenvoudig een afspraak via ons formulier en geniet van
+                  onze uitstekende service.
+                </p>
+
+                <form
+                  id="appointmentForm"
+                  class="appoin-form"
+                  method="POST"
+                  action="/book-appointment"
+                >
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="Uw volledige naam"
+                      required
+                      class="input-field"
+                    />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="E-mailadres"
+                      required
+                      class="input-field"
+                    />
+                  </div>
+
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="Telefoonnummer"
+                      required
+                      class="input-field"
+                    />
+                    <select
+                      id="category"
+                      name="category"
+                      class="input-field"
+                      required
+                    >
+                      <option value="Knippen">Knippen</option>
+                      <option value="Haar en Scheren">Haar en Scheren</option>
+                      <option value="Baard Scheren">Baard Scheren</option>
+                      <option value="Kinderen tot 10 jaar">
+                        Kinderen tot 10 jaar
+                      </option>
+                      <option value="Senioren 60+">Senioren 60+</option>
+                      <option value="Studenten knippen">
+                        Studenten knippen
+                      </option>
+                      <option value="Volledige service">
+                        Volledige service
+                      </option>
+                      <option value="Verven">Verven</option>
+                    </select>
+
+                    <select
+                      id="barberName"
+                      name="barberName"
+                      class="input-field"
+                      required
+                    >
+                      <option value="">Selecteer een kapper</option>
+                      <!-- Dynamisch invullen -->
+                    </select>
+                  </div>
+
+                  <!-- Datumkiezer -->
+                  <div>
+                    <input
+                      type="text"
+                      id="date"
+                      name="date"
+                      required
+                      class="input-field date w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Kies een datum"
+                    />
+                  </div>
+
+                  <!-- Tijdslot Dropdown -->
+                  <div>
+                    <select
+                      id="time"
+                      name="time"
+                      required
+                      class="input-field w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="">Selecteer eerst een datum</option>
+                      <!-- Dynamisch invullen -->
+                    </select>
+                  </div>
+
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Typ hier uw opmerkingen..."
+                    required
+                    class="input-field"
+                  ></textarea>
+
+                  <button type="submit" class="form-btn">
+                    <span class="span">Maak nu een afspraak</span>
+                    <ion-icon
+                      name="arrow-forward"
+                      aria-hidden="true"
+                    ></ion-icon>
+                  </button>
+                </form>
+              </div>
+
+              <figure
+                class="card-banner img-holder"
+                style="--width: 250; --height: 774"
+              >
+                <img
+                  src="./assets/images/appoin-banner-2.jpg"
+                  width="250"
+                  height="774"
+                  loading="lazy"
+                  alt=""
+                  class="img-cover"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <!-- 
+    - #FOOTER
+  -->
+
+    <footer
+      class="footer has-bg-image"
+      style="background-image: url('./assets/images/footer-bg.png')"
+    >
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a href="#" class="logo">
+              Luxe Style
+              <span class="span">Barbershop</span>
+            </a>
+          </div>
+
+          <div class="footer-link-box">
+            <ul class="footer-list">
+              <li>
+                <p class="footer-list-title">Snelle links</p>
+              </li>
+
+              <li>
+                <a href="#home" class="footer-link has-before">Home</a>
+              </li>
+              <li>
+                <a href="#services" class="footer-link has-before">Diensten</a>
+              </li>
+              <li>
+                <a href="#pricing" class="footer-link has-before">Prijzen</a>
+              </li>
+              <li>
+                <a href="#gallery" class="footer-link has-before">Galerij</a>
+              </li>
+              <li>
+                <a href="#appointment" class="footer-link has-before"
+                  >Afspraak maken</a
+                >
+              </li>
+            </ul>
+
+            <ul class="footer-list" id="contact">
+              <li>
+                <p class="footer-list-title">Contact</p>
+              </li>
+
+              <li class="footer-list-item">
+                <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+
+                <address class="contact-link">Binnenwatersloot 33B</address>
+              </li>
+
+              <li class="footer-list-item">
+                <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+
+                <a href="tel:+31 628 2867 92" class="contact-link"
+                  >+31 628 2867 92</a
+                >
+              </li>
+
+              <li class="footer-list-item">
+                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+
+                <span class="contact-link"
+                  >Maandag - Zondag, 10:00 - 20:00 uur</span
+                >
+              </li>
+
+              <li class="footer-list-item">
+                <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+
+                <a
+                  href="mailto:luxe.style.barber@gmail.com"
+                  class="contact-link"
+                  >luxe.style.barber@gmail.com</a
+                >
+              </li>
+            </ul>
+
+            <div class="owner-section">
+              <img
+                src="./assets/images/owner.png"
+                alt="Eigenaar"
+                class="owner-image"
+              />
+              <p class="owner-name">Ahmed Al-Bader</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="copyright">
+            &copy; 2025
+            <a href="#" class="copyright-link">Luxe Style Barber</a>. Alle
+            rechten voorbehouden.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 
+    - #BACK TO TOP
+  -->
+
+    <a
+      href="#top"
+      class="back-top-btn"
+      aria-label="back to top"
+      data-back-top-btn
+    >
+      <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+    </a>
+
+    <!-- 
+    - custom js link
+  -->
+    <script src="./assets/js/script.js" defer></script>
+
+    <!-- 
+    - ionicon link
+  -->
+    <script type="module" src="assets/server/index.js"></script>
+    <!-- Add this before closing </body> tag -->
+    <script src="assets/js/form-handler.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script>
+      async function loadBarbers() {
+        const select = document.getElementById("barberName");
+
+        try {
+          // Fetch barbers from the API
+          const response = await fetch("/api/barbers");
+          const barbers = await response.json();
+
+          // Populate the dropdown
+          barbers.forEach((barber) => {
+            const option = document.createElement("option");
+            option.value = barber.name; // Set the value as the barber's ID
+            option.textContent = barber.name; // Set the display text as the barber's name
+            select.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error fetching barbers:", error);
+        }
+      }
+
+      // Load barbers when the page is loaded
+      document.addEventListener("DOMContentLoaded", loadBarbers);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const dateInput = document.getElementById("date");
+
+        try {
+          const response = await fetch("/api/fully-booked-dates");
+          const data = await response.json();
+
+          const fullyBookedDates = data.fullyBookedDates;
+
+          // Initialize Flatpickr
+          flatpickr(dateInput, {
+            disable: fullyBookedDates.map((date) => new Date(date)), // Disable fully booked dates
+            minDate: "today", // Prevent past dates
+            maxDate: new Date().fp_incr(30), // Allow booking up to 30 days in advance
+            dateFormat: "Y-m-d", // Match the backend date format
+          });
+        } catch (error) {
+          console.error("Error fetching fully booked dates:", error);
+        }
+      });
+    </script>
+    <script>
+      document
+        .getElementById("date")
+        .addEventListener("change", async (event) => {
+          const selectedDate = event.target.value;
+          const timeDropdown = document.getElementById("time");
+
+          if (!selectedDate) {
+            timeDropdown.innerHTML = "<option>Select a date first</option>";
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `/api/available-slots?date=${selectedDate}`
+            );
+            const data = await response.json();
+
+            if (data.error || !data.availableSlots.length) {
+              timeDropdown.innerHTML = "<option>No available slots</option>";
+              return;
+            }
+
+            // Populate available slots
+            timeDropdown.innerHTML = data.availableSlots
+              .map((slot) => `<option value="${slot}">${slot}</option>`)
+              .join("");
+          } catch (error) {
+            console.error("Error fetching available slots:", error);
+            timeDropdown.innerHTML = "<option>Error fetching slots</option>";
+          }
+        });
+    </script>
+  </body>
+</html>
