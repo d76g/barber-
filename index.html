@@ -929,7 +929,8 @@
                       class="input-field"
                       required
                     >
-                      <option value="Knippen">Knippen</option>
+
+                      <option value="Knippen" selected>Knippen</option>
                       <option value="Haar en Scheren">Haar en Scheren</option>
                       <option value="Baard Scheren">Baard Scheren</option>
                       <option value="Kinderen tot 10 jaar">
@@ -1154,83 +1155,174 @@
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
     <script>
-      async function loadBarbers() {
-        const select = document.getElementById("barberName");
+  async function loadBarbers() {
+    const select = document.getElementById("barberName");
 
-        try {
-          // Fetch barbers from the API
-          const response = await fetch("/api/barbers");
-          const barbers = await response.json();
+    try {
+      // Fetch barbers from the API
+      const response = await fetch("/api/barbers");
+      const barbers = await response.json();
 
-          // Populate the dropdown
-          barbers.forEach((barber) => {
-            const option = document.createElement("option");
-            option.value = barber.name; // Set the value as the barber's ID
-            option.textContent = barber.name; // Set the display text as the barber's name
-            select.appendChild(option);
-          });
-        } catch (error) {
-          console.error("Error fetching barbers:", error);
-        }
+      // Populate the dropdown
+      barbers.forEach((barber) => {
+        const option = document.createElement("option");
+        option.value = barber.name; // Set the value as the barber's ID
+        option.textContent = barber.name; // Set the display text as the barber's name
+        select.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching barbers:", error);
+    }
+  }
+
+  // Load barbers when the page is loaded
+  document.addEventListener("DOMContentLoaded", loadBarbers);
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const dateInput = document.getElementById("date");
+
+    try {
+      const response = await fetch("/api/fully-booked-dates");
+      const data = await response.json();
+
+      const fullyBookedDates = data.fullyBookedDates;
+
+      // Initialize Flatpickr
+      flatpickr(dateInput, {
+        disable: fullyBookedDates.map((date) => new Date(date)), // Disable fully booked dates
+        minDate: "today", // Prevent past dates
+        maxDate: new Date().fp_incr(30), // Allow booking up to 30 days in advance
+        dateFormat: "Y-m-d", // Match the backend date format
+      });
+    } catch (error) {
+      console.error("Error fetching fully booked dates:", error);
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+  const categoryDropdown = document.getElementById("category");
+  const dateInput = document.getElementById("date");
+  const timeDropdown = document.getElementById("time");
+
+  // Define service durations
+  const serviceDurations = {
+    "Knippen": 30,
+    "Haar en Scheren": 45,
+    "Baard Scheren": 15,
+    "Kinderen tot 10 jaar": 30,
+    "Senioren 60+": 15,
+    "Studenten knippen": 30,
+    "Volledige service": 60,
+    "Verven": 15,
+  };
+
+  // Fetch fully booked dates and initialize the date picker
+  try {
+    const response = await fetch("/api/fully-booked-dates");
+    const data = await response.json();
+    const fullyBookedDates = data.fullyBookedDates;
+
+    flatpickr(dateInput, {
+      disable: fullyBookedDates.map((date) => new Date(date)),
+      minDate: "today",
+      maxDate: new Date().fp_incr(30),
+      dateFormat: "Y-m-d",
+    });
+
+    // Trigger time slot loading for the default category and today's date
+    const defaultCategory = categoryDropdown.value;
+    const defaultDate = new Date().toISOString().split("T")[0];
+    dateInput.value = defaultDate; // Set today's date in the input
+
+    await loadAvailableSlots(defaultDate, defaultCategory);
+  } catch (error) {
+    console.error("Error initializing date picker or loading slots:", error);
+  }
+
+  // Load available slots when the date or category changes
+  dateInput.addEventListener("change", async () => {
+    const selectedDate = dateInput.value;
+    const selectedCategory = categoryDropdown.value;
+    if (selectedDate && selectedCategory) {
+      await loadAvailableSlots(selectedDate, selectedCategory);
+    }
+  });
+
+  categoryDropdown.addEventListener("change", async () => {
+    const selectedDate = dateInput.value;
+    const selectedCategory = categoryDropdown.value;
+    if (selectedDate && selectedCategory) {
+      await loadAvailableSlots(selectedDate, selectedCategory);
+    }
+  });
+
+  // Function to fetch and display available slots
+  async function loadAvailableSlots(date, category) {
+    if (!date || !category) return;
+
+    const serviceDuration = serviceDurations[category];
+    if (!serviceDuration) {
+      timeDropdown.innerHTML = "<option>Invalid category</option>";
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/available-slots?date=${date}&category=${category}`);
+      const data = await response.json();
+
+      const startTime = 11 * 60; // 11:00 AM in minutes
+      const endTime = 20 * 60;   // 8:00 PM in minutes
+
+      const allSlots = [];
+      for (let time = startTime; time < endTime; time += serviceDuration) {
+        const hours = Math.floor(time / 60).toString().padStart(2, "0");
+        const minutes = (time % 60).toString().padStart(2, "0");
+        const formattedTime = `${hours}:${minutes}`;
+        allSlots.push({ timeInMinutes: time, formattedTime });
       }
 
-      // Load barbers when the page is loaded
-      document.addEventListener("DOMContentLoaded", loadBarbers);
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const dateInput = document.getElementById("date");
+      const bookedSlots = data.bookedSlots || [];
 
-        try {
-          const response = await fetch("/api/fully-booked-dates");
-          const data = await response.json();
+      timeDropdown.innerHTML = allSlots
+        .map((slot) => {
+          const isAvailable = !bookedSlots.includes(slot.formattedTime);
+          return `<option value="${slot.formattedTime}" ${isAvailable ? "" : "disabled"}>${slot.formattedTime} ${isAvailable ? "(Available)" : "(Booked)"}</option>`;
+        })
+        .join("");
+    } catch (error) {
+      console.error("Error loading available slots:", error);
+      timeDropdown.innerHTML = "<option>Error fetching slots</option>";
+    }
+  }
+});
 
-          const fullyBookedDates = data.fullyBookedDates;
 
-          // Initialize Flatpickr
-          flatpickr(dateInput, {
-            disable: fullyBookedDates.map((date) => new Date(date)), // Disable fully booked dates
-            minDate: "today", // Prevent past dates
-            maxDate: new Date().fp_incr(30), // Allow booking up to 30 days in advance
-            dateFormat: "Y-m-d", // Match the backend date format
-          });
-        } catch (error) {
-          console.error("Error fetching fully booked dates:", error);
-        }
-      });
-    </script>
-    <script>
-      document
-        .getElementById("date")
-        .addEventListener("change", async (event) => {
-          const selectedDate = event.target.value;
-          const timeDropdown = document.getElementById("time");
+</script>
 
-          if (!selectedDate) {
-            timeDropdown.innerHTML = "<option>Select a date first</option>";
-            return;
-          }
+<script>
+  document.getElementById("category").addEventListener("change", async (event) => {
+    const category = event.target.value;
+    const date = document.getElementById("date").value;
 
-          try {
-            const response = await fetch(
-              `/api/available-slots?date=${selectedDate}`
-            );
-            const data = await response.json();
+    if (!date || !category) return;
 
-            if (data.error || !data.availableSlots.length) {
-              timeDropdown.innerHTML = "<option>No available slots</option>";
-              return;
-            }
+    try {
+      const response = await fetch(`/api/available-slots?date=${date}&category=${category}`);
+      const data = await response.json();
 
-            // Populate available slots
-            timeDropdown.innerHTML = data.availableSlots
-              .map((slot) => `<option value="${slot}">${slot}</option>`)
-              .join("");
-          } catch (error) {
-            console.error("Error fetching available slots:", error);
-            timeDropdown.innerHTML = "<option>Error fetching slots</option>";
-          }
-        });
-    </script>
+      const timeDropdown = document.getElementById("time");
+      timeDropdown.innerHTML = data.availableSlots
+        .map((slot) => `<option value="${slot}">${slot}</option>`)
+        .join("");
+    } catch (error) {
+      console.error("Error fetching time slots:", error);
+    }
+  });
+</script>
+
   </body>
 </html>

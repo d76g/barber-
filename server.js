@@ -151,20 +151,28 @@ async function addAppointment({
 
 async function isTimeSlotAvailable(date, time) {
   try {
+    // Fetch the total number of barbers (users)
+    const barberCountResult = await pool.query("SELECT COUNT(*) FROM Users");
+    const totalBarbers = parseInt(barberCountResult.rows[0].count, 10);
+
+    // Count the number of appointments already booked for the given date and time
     const query = `
-      SELECT * FROM Appointments
+      SELECT COUNT(*) FROM Appointments
       WHERE date = $1 AND time = $2
     `;
     const result = await pool.query(query, [date, time]);
-    return result.rowCount === 0; // True if no conflicting appointments exist
+    const bookedAppointments = parseInt(result.rows[0].count, 10);
+
+    // Check if the booked appointments are less than the total number of barbers
+    return bookedAppointments < totalBarbers;
   } catch (error) {
     console.error("Error checking time slot availability:", error);
     throw new Error("Error checking time slot availability");
   }
 }
 
+
 app.post("/admin/dashboard/add-appointment", async (req, res) => {
-  const userName = req.cookies.userName || "Guest"; // Get user's name from cookies
   try {
     const { name, email, phone, category, date, time, barberName, message } =
       req.body;
@@ -179,12 +187,12 @@ app.post("/admin/dashboard/add-appointment", async (req, res) => {
     const isAvailable = await isTimeSlotAvailable(date, time);
     if (!isAvailable) {
       return res.status(400).json({
-        error: `The time slot on ${date} at ${time} is already booked.`,
+        error: `The time slot on ${date} at ${time} is already fully booked.`,
       });
     }
 
     // Save the appointment
-    const savedAppointment = await addAppointment({
+    await addAppointment({
       name,
       email,
       phone,
@@ -195,19 +203,14 @@ app.post("/admin/dashboard/add-appointment", async (req, res) => {
       message,
     });
 
-    // Fetch updated appointments
-    const result = await pool.query(
-      "SELECT * FROM Appointments ORDER BY date, time"
-    );
-    const appointments = result.rows;
-
-    // Re-render the dashboard with updated appointments
+    // Redirect to the dashboard
     res.redirect("/admin/dashboard");
   } catch (error) {
     console.error("Error adding appointment:", error);
     res.status(500).send("Error adding appointment.");
   }
 });
+
 
 app.post("/book-appointment", async (req, res) => {
   try {
@@ -256,52 +259,119 @@ app.post("/book-appointment", async (req, res) => {
   }
 });
 
-app.get("/api/available-slots", async (req, res) => {
-  const { date } = req.query;
+const serviceDurations = {
+  "Knippen": 30,
+  "Haar en Scheren": 45,
+  "Baard Scheren": 15,
+  "Kinderen tot 10 jaar": 30,
+  "Senioren 60+": 15,
+  "Studenten knippen": 30,
+  "Volledige service": 60,
+  "Verven": 15,
+};
 
-  if (!date) {
-    return res.status(400).json({ error: "Date is required" });
+
+app.get("/api/available-slots", async (req, res) => {
+  const { date, category } = req.query;
+
+  if (!date || !category) {
+    return res.status(400).json({ error: "Date and category are required." });
   }
 
   try {
-    // Fetch all appointments for the given date
-    const result = await pool.query(
-      "SELECT time FROM Appointments WHERE date = $1",
+    const serviceDuration = serviceDurations[category];
+    if (!serviceDuration) {
+      return res.status(400).json({ error: "Invalid service category." });
+    }
+
+    // Fetch existing appointments for the given date
+    const appointmentsResult = await pool.query(
+      "SELECT time, barber_name FROM Appointments WHERE date = $1",
       [date]
     );
 
-    const bookedSlots = result.rows.map((row) => row.time);
+    const appointments = appointmentsResult.rows;
 
-    // Define all possible time slots (e.g., 9 AM to 5 PM, 30-min intervals)
-    const allSlots = [
-      "09:00",
-      "09:30",
-      "10:00",
-      "10:30",
-      "11:00",
-      "11:30",
-      "12:00",
-      "12:30",
-      "13:00",
-      "13:30",
-      "14:00",
-      "14:30",
-      "15:00",
-      "15:30",
-      "16:00",
-      "16:30",
-      "17:00",
-    ];
+    // Get the list of all barbers (users) in the system
+    const barbersResult = await pool.query("SELECT name FROM Users"); // Adjust query as needed
+    const allBarbers = barbersResult.rows.map((row) => row.name);
 
-    // Filter out booked slots
-    const availableSlots = allSlots.filter(
-      (slot) => !bookedSlots.includes(slot)
-    );
+    if (allBarbers.length === 0) {
+      return res.status(400).json({ error: "No barbers available." });
+    }
 
-    res.json({ availableSlots });
+    // Create time slots from 11 AM to 8 PM
+    const startTime = 11 * 60; // Start time in minutes
+    const endTime = 20 * 60;  // End time in minutes
+
+    const allSlots = [];
+    for (let time = startTime; time < endTime; time += serviceDuration) {
+      const hours = Math.floor(time / 60).toString().padStart(2, "0");
+      const minutes = (time % 60).toString().padStart(2, "0");
+      const formattedTime = `${hours}:${minutes}`;
+      allSlots.push({ timeInMinutes: time, formattedTime });
+    }
+
+    // Calculate available slots based on barbers' capacity
+    const availableSlots = allSlots.filter((slot) => {
+      const slotStart = slot.timeInMinutes;
+      const slotEnd = slotStart + serviceDuration;
+
+      // Find the appointments overlapping this slot
+      const overlappingAppointments = appointments.filter((appt) => {
+        const apptStart = parseInt(appt.time, 10);
+        const apptEnd = apptStart + serviceDuration;
+        return (
+          (apptStart < slotEnd && apptStart >= slotStart) || // Overlap at the start
+          (apptEnd > slotStart && apptEnd <= slotEnd)        // Overlap at the end
+        );
+      });
+
+      // Check if the number of overlapping appointments exceeds the number of barbers
+      return overlappingAppointments.length < allBarbers.length;
+    });
+
+    // Return only the formatted times
+    res.json({ availableSlots: availableSlots.map((slot) => slot.formattedTime) });
   } catch (error) {
     console.error("Error fetching available slots:", error);
     res.status(500).json({ error: "Failed to fetch available slots." });
+  }
+});
+
+
+app.get("/api/available-barbers", async (req, res) => {
+  const { date, time, category } = req.query;
+
+  if (!date || !time || !category) {
+    return res.status(400).json({ error: "Date, time, and category are required." });
+  }
+
+  try {
+    const serviceDuration = serviceDurations[category];
+    if (!serviceDuration) {
+      return res.status(400).json({ error: "Invalid service category." });
+    }
+
+    const result = await pool.query(
+      `SELECT barber_name 
+       FROM Appointments 
+       WHERE date = $1 
+       AND (time::int BETWEEN $2 AND $3 OR time::int + $4 > $2)`,
+      [date, time, parseInt(time) + serviceDuration, serviceDuration]
+    );
+
+    const bookedBarbers = result.rows.map((row) => row.barber_name);
+
+    const allBarbers = ["Barber1", "Barber2", "Barber3", "Barber4", "Barber5"]; // Replace with actual data from your database
+    const availableBarbers = allBarbers.filter(
+      (barber) => !bookedBarbers.includes(barber)
+    );
+
+    res.json({ availableBarbers });
+  } catch (error) {
+    console.error("Error fetching available barbers:", error);
+    res.status(500).json({ error: "Failed to fetch available barbers." });
   }
 });
 
